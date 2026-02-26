@@ -3,6 +3,8 @@ import { ZodError } from "zod";
 import { env } from "./env";
 import fastifyJwt from "@fastify/jwt";
 import { userRoutes } from "./http/controller/user/routes";
+import { championshipRoutes } from "./http/controller/championship/routes";
+import { roundRoutes } from "./http/controller/round/routes";
 
 export const app = fastify()
 
@@ -10,6 +12,8 @@ app.register(fastifyJwt,{
     secret: env.JWT_SECRET
 })
 app.register(userRoutes)
+app.register(championshipRoutes)
+app.register(roundRoutes)
 
 app.setErrorHandler((error, request, reply) =>{
     if(error instanceof ZodError){

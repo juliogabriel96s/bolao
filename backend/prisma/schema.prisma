@@ -46,7 +46,7 @@ model Championship {
 
 model Round {
   id     String @id @default(uuid())
-  number Int // Rodada 1, 2, 3...
+  number Int
 
   championship   Championship @relation(fields: [championshipId], references: [id])
   championshipId String
