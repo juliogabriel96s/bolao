@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -33,8 +27,8 @@ enum Role {
 
 model Championship {
   id        String   @id @default(uuid())
-  name      String // Ex: Brasileirão 2026, Premier League 2026
-  country   String // Brasil, Inglaterra
+  name      String
+  country   String
   startDate DateTime
   endDate   DateTime
 
@@ -64,7 +58,7 @@ model Game {
   homeTeam String
   awayTeam String
 
-  homeScore Int? // Resultado final (admin preenche)
+  homeScore Int?
   awayScore Int?
 
   startTime DateTime
@@ -128,8 +122,8 @@ model Payment {
   status PaymentStatus @default(PENDING)
   method PaymentMethod
 
-  proofUrl   String? // Se for comprovante
-  externalId String? // ID do PIX (Mercado Pago, etc)
+  proofUrl   String?
+  externalId String?
 
   createdAt DateTime @default(now())
 }
