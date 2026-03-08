@@ -6,4 +6,5 @@ export interface GameRepository{
     findById(gameId: string): Promise<Game | null>
     updateScore(gameId: string, homeScore: number, awayScore: number): Promise<Game>
     delete(gameId: string): Promise<void>
+    findFistGame(roundId: string): Promise<Game | null>
 }

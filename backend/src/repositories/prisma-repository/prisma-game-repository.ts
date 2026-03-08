@@ -1,8 +1,9 @@
-import { Prisma, Game } from "@prisma/client";
+import { Prisma} from "@prisma/client";
 import { GameRepository } from "../game-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaGameRepository implements GameRepository{
+
     async create(data: Prisma.GameUncheckedCreateInput) {
         const game = await prisma.game.create({
             data
@@ -49,6 +50,19 @@ export class PrismaGameRepository implements GameRepository{
                 id: gameId
             }
         })
+    }
+
+        async findFistGame(roundId: string) {
+        const game = await prisma.game.findFirst({
+            where:{
+                roundId
+            }, 
+            orderBy:{
+                startTime: "asc"
+            }
+        })
+
+        return game
     }
 
 }
