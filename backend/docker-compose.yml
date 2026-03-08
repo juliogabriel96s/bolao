@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: bitnami/postgresql
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: api-bolao
+    volumes:
+      - postgres_data:/bitnami/postgresql
+
+  api:
+    build: .
+    ports:
+      - "3333:3333"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://admin:admin@localhost:5433/api-bolao?schema=public
+
+
+volumes:
+  postgres_data:
