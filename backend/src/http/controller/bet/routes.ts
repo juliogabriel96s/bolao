@@ -9,4 +9,6 @@ export async function betRoutes(app: FastifyInstance){
 
     app.post("/round/:roundId/bet", createBet)
     app.get("/round/bet", getRoundTable)
+    app.get("/me/round/bet", getRoundTable)
+
 }

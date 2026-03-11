@@ -3,6 +3,33 @@ import { BetRepository, RankingItem } from "../bet-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaBetRepository implements BetRepository{
+   
+   async findByUser(userId: string) {
+        const bet = await prisma.bet.findMany({
+            where:{
+                userId
+            },
+            include:{
+                round:{
+                    include:{
+                        championship: true
+                    }
+                },
+                guesses:{
+                    include:{
+                        game: true
+                    }
+                },
+            
+            },
+            orderBy:{
+                createdAt: "desc"
+            }
+        }) 
+
+        return bet
+    }
+
     async getRanking() {
         const bets = await prisma.bet.findMany({
       include: {

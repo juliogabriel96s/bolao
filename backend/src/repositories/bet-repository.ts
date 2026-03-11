@@ -6,6 +6,7 @@ export interface BetRepository{
     updateBet(betId: string ,totalPoints: number): Promise<Bet>
     findByRound(roundId: string): Promise<Bet[]>
     getRanking(): Promise<RankingItem[]>
+    findByUser(userId: string): Promise<Bet[]>
 }
 
 export interface RankingItem{
