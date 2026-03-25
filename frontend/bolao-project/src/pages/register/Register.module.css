@@ -1,0 +1,43 @@
+.container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #74b9ff, #a29bfe);
+
+}
+h1{
+    font-size:50px;
+}
+
+.form{
+    width: 40%;
+  max-width: 320px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  margin: 0 auto;
+}
+
+Button{
+    margin-left: 10px;
+}
+
+.link{
+    text-align: center;
+    font-size: 14px;
+}
+
+.link span {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 14px;
+  text-align: center;
+}

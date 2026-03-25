@@ -7,6 +7,8 @@ import { championshipRoutes } from "./http/controller/championship/routes";
 import { roundRoutes } from "./http/controller/round/routes";
 import { gameRoutes } from "./http/controller/game/routes";
 import { betRoutes } from "./http/controller/bet/routes";
+import { paymentRoutes } from "./http/controller/payment.ts/routes";
+import cors from "@fastify/cors"
 
 export const app = fastify()
 
@@ -18,6 +20,10 @@ app.register(championshipRoutes)
 app.register(roundRoutes)
 app.register(gameRoutes)
 app.register(betRoutes)
+app.register(paymentRoutes)
+app.register(cors, {
+  origin: "http://localhost:5173"
+})
 
 app.setErrorHandler((error, request, reply) =>{
     if(error instanceof ZodError){

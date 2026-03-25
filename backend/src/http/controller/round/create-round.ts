@@ -5,14 +5,16 @@ import z from "zod";
 
 export async function createRound(request: FastifyRequest, reply: FastifyReply){
     const createRoundBodySchema = z.object({
-        number: z.coerce.number()
+        number: z.coerce.number(),
+        startDate: z.coerce.date(),
+         endDate: z.coerce.date()
     })
 
     const createRoundParamsSchema = z.object({
         championshipId: z.coerce.string() 
     })
 
-    const {number} = createRoundBodySchema.parse(request.body)
+    const {number, startDate, endDate} = createRoundBodySchema.parse(request.body)
     const {championshipId} = createRoundParamsSchema.parse(request.params)
 
     try{
@@ -20,7 +22,9 @@ export async function createRound(request: FastifyRequest, reply: FastifyReply){
 
         const round = await createRoundUseCase.execute({
             number,
-            championshipId
+            championshipId,
+            startDate,
+            endDate
         })
 
         return reply.status(201).send({round})

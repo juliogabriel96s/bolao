@@ -7,6 +7,8 @@ import { Round } from "@prisma/client"
 interface CreateRoundUseCaseRequest{
     number: number
     championshipId: string
+    startDate: Date
+    endDate: Date
 }
 
 type CreateRoundUseCaseResponse =   Either<
@@ -24,7 +26,9 @@ export class CreateRoundUseCase{
 
     async execute({
         number,
-        championshipId
+        championshipId,
+        startDate,
+        endDate
     }: CreateRoundUseCaseRequest): Promise<CreateRoundUseCaseResponse>{
         const championship = await this.championshipRepository.findById(championshipId)
 
@@ -40,7 +44,9 @@ export class CreateRoundUseCase{
 
         const round = await this.roundRepository.create({
             number,
-            championshipId
+            championshipId,
+            startDate,
+            endDate
         })
 
         return right({

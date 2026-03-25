@@ -15,7 +15,7 @@ export async function createBet(request: FastifyRequest, reply: FastifyReply){
     })
 
     const createBetParamsSchema = z.object({
-        roundId: z.string() 
+        roundId: z.string(),
     })
 
     const { guesses } = createBetBodySchema.parse(request.body)

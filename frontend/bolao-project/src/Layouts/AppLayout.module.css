@@ -1,0 +1,14 @@
+.container{
+    min-height: 100vh;
+}
+
+.header{
+    background-color: var(--primary);
+    color: white;
+    padding: 16px;
+    font-size: 20px;
+}
+
+.content{
+
+}
