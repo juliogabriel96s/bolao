@@ -1,32 +1,33 @@
 import styles from "./create-championship.module.css"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/UseAuth";
 import { useState } from "react";
 import { Input } from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
 
-export function CreateChampioship(){
+export function CreateGame(){
 
-    const {createChampionship} = useAuth()
+    const {roundId} = useParams()
+
+    const {createGames} = useAuth()
 
     const navigate = useNavigate()
 
-    const [name, setName] = useState("")
-    const [country, setCountry] = useState("")
+    const [homeTeam, setHomeTeam] = useState("")
+    const [awayTeam, setAwayTeam] = useState("")
     const [startDate, setStartDate] = useState<Date>(new Date)
-    const [endDate, setEndDate] = useState<Date>(new Date)
     const [error, setError] = useState("")
 
-     async function handleCreateChampionship() {
+     async function handleCreateGame() {
      try {
     setError("")
-    await createChampionship(name, country, startDate, endDate)
+    await createGames( roundId!, homeTeam,  awayTeam, startDate)
     navigate("/admin/dashboard")
   } catch (err: unknown) {
      if (err instanceof Error) {
     setError(err.message)
   } else {
-    setError("Erro ao criar campeonato")
+    setError("Erro ao criar jogo")
   }
   }
   
@@ -35,16 +36,18 @@ export function CreateChampioship(){
   return(
     <div className={styles.container}>
       <div className={styles.box}>
-        <h1>Atualize o campeonato</h1>
+        <h1 className={styles.introducao}>crie o jogo</h1>
 
         <Input
-        placeholder="nome do campeonato"
-        onChange={e => setName(e.target.value)}
+        placeholder="Home team"
+        onChange={e => setHomeTeam(e.target.value)}
         />
-
+        
+        <h3 className={styles.vs}>Vs</h3>
+        
         <Input
-        placeholder="País"
-        onChange={e=> setCountry(e.target.value)}
+        placeholder="Away team"
+        onChange={e=> setAwayTeam(e.target.value)}
         />
 
         <Input
@@ -54,18 +57,12 @@ export function CreateChampioship(){
         placeholder=""
         />
 
-        <Input
-        type="date"
-        value={endDate.toISOString().split("T")[0]}
-        onChange={e => setEndDate(new Date(e.target.value))}
-        placeholder=""
-        />
 
         {error && <p className={styles.error}>{error}</p>}
         
 
-        <Button onClick={handleCreateChampionship}>
-            Criar Campeonato
+        <Button onClick={handleCreateGame}>
+            Adicionar jogo
         </Button>
       </div>
     

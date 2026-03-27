@@ -59,7 +59,7 @@ export function Register(){
 
                 <p className={styles.link}>
                   já tem conta?{" "}
-                  <span onClick={() => navigate("/sessions")}>
+                  <span onClick={() => navigate("/")}>
                     Entrar
                   </span>
                 </p>

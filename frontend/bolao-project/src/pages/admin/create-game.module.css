@@ -7,7 +7,7 @@
  background: linear-gradient(135deg, #0072ff, #00c6ff);
 }
 
-h1{
+.introducao{
     font-size: 40px;
 }
 
@@ -24,4 +24,8 @@ h1{
       color: #ff6b6b;
   font-size: 14px;
   text-align: center;
+}
+
+.vs{
+    font-size: 10px;
 }
