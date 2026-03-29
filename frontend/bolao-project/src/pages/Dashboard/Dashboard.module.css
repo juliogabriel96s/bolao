@@ -1,0 +1,36 @@
+.container{
+    padding: 20;
+}
+.jogos{
+    background: "#1e293b";
+    padding: 16;
+    marginBottom: 12;
+    borderRadius: 8;
+    color: "#fff";
+}
+
+.games{
+    margint-top: 10;
+}
+.placar{
+    width: 50;
+}
+.span{
+    margin: 0 10;
+}
+.button{
+
+    marginTop: 20;
+    padding: 12;
+    width: "100%";
+    borderRadius: 8;
+    background: "#22c55e";
+    color: "#fff";
+    border: "none";
+}
+
+.buttonLogout{
+    width: 20
+}
+
+

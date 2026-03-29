@@ -1,7 +1,7 @@
 export function useAuth(){
 
  async function signIn(email: string, password: string) {
-  const response = await fetch("http://localhost:3333/session", {
+  const response = await fetch("http://localhost:3333/sessions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -74,6 +74,10 @@ export function useAuth(){
       })
   }
 
-    return { signIn, signUp, createChampionship, createRounds, createGames }
+  function signOut() {
+  localStorage.removeItem("token");
+}
+
+    return { signIn, signUp, signOut, createChampionship, createRounds, createGames }
   
 }

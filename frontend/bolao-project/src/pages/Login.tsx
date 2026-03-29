@@ -21,7 +21,7 @@ export function Login(){
      try {
     setError("")
     await signIn(email, password)
-    navigate("/dashboard")
+    navigate("/bets/championship")
   } catch (err: unknown) {
      if (err instanceof Error) {
     setError(err.message)

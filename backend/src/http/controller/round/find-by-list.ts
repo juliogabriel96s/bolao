@@ -13,11 +13,18 @@ export async function findByListRound(request: FastifyRequest, reply: FastifyRep
     try{
         const findByListRoundUseCase = makeFindByListRoundUseCase()
 
-        const rounds = await findByListRoundUseCase.execute({
+        const result = await findByListRoundUseCase.execute({
             championshipId
         })
 
-        return reply.status(200).send({rounds})
+          if (result.isLeft()) {
+            return reply.status(400).send()
+            }
+
+           return reply.status(200).send({
+          rounds: result.value.rounds
+          })
+
     } catch(err){
         throw err
     }

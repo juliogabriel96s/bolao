@@ -7,7 +7,7 @@ interface FindByListRoundUseCaseRequest{
 }
 
 type FindByListRoundUseCaseResponse = Either<
-{},
+ Error,
 {
     rounds: Round[]
 }

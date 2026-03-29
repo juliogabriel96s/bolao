@@ -3,7 +3,7 @@ import { ChampionshipRepository } from "@/repositories/championship-repository";
 import { Championship } from "@prisma/client";
 
 type ListChampionshipUseCaseResponse = Either<
-{},
+Error,
 {
     championships: Championship[]
 }

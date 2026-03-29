@@ -16,11 +16,18 @@ export async function listByRound(request: FastifyRequest, reply: FastifyReply){
     try{
         const listByRoundUseCase = makeListByRoundGameUseCase()
 
-        const game = await listByRoundUseCase.execute({
+        const result = await listByRoundUseCase.execute({
              roundId
         })
 
-        return reply.status(200).send({game})
+         if (result.isLeft()) {
+         return reply.status(400).send()
+         }
+
+        return reply.status(200).send({
+          games: result.value.games
+        })
+
     } catch(err){
         if(err instanceof ResourceNotFound){
             return reply.status(409).send({message: "game not found"})
