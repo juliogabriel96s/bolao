@@ -36,7 +36,7 @@ export function CreateGame(){
   return(
     <div className={styles.container}>
       <div className={styles.box}>
-        <h1 className={styles.introducao}>crie o jogo</h1>
+        <h1 className={styles.introducao}>Criar Jogo</h1>
 
         <Input
         placeholder="Home team"

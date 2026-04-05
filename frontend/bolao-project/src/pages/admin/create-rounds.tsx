@@ -22,7 +22,7 @@ export function CreateRounds(){
      try {
     setError("")
     await createRounds(Number(number), championshipId!, startDate, endDate)
-    navigate("/admin/dashboard")
+    navigate("/admin/round/:roundId/game")
   } catch (err: unknown) {
      if (err instanceof Error) {
     setError(err.message)

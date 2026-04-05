@@ -1,9 +1,8 @@
-import styles from "./DashboardRounds.module.css"
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Round } from "../../types/Round";
 
-export function DashboardRounds() {
+export function GetDashboardRounds() {
   const { championshipId } = useParams();
   const navigate = useNavigate();
 
@@ -42,10 +41,8 @@ export function DashboardRounds() {
   }, [championshipId]);
 
   return (
-    <div className={styles.container}>
-
-      <div className={styles.box}>
-         <h1>Rodadas</h1>
+    <div>
+      <h1>Rodadas</h1>
 
       {error && <p>{error}</p>}
 
@@ -53,20 +50,17 @@ export function DashboardRounds() {
 
       {rounds.map((round) => (
         <div key={round.id}>
-          <p className={styles.paragrafo}>Rodada {round.number}</p>
+          <p>Rodada {round.number}</p>
 
           <button
             onClick={() =>
-              navigate(`/bets/round/${round.id}/game`)
+              navigate(`/dashboard/round/${round.id}/game`)
             }
-            className={styles.button}
           >
             Ver jogos
           </button>
         </div>
       ))}
-      </div>
-     
     </div>
   );
 }

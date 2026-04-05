@@ -19,3 +19,8 @@ h1{
   gap: 15px;
   margin: 0 auto;
 }
+
+.paragrafo{
+  color: #000;
+  font-size: 20px;
+}

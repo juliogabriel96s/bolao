@@ -1,7 +1,8 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
-import { makeAuthenticateUserUseCase } from "@/use-cases/factories/user/make-authenticate-user-use-case"; 
-import { ResourceNotFound } from "@/core/errors/errors/resource-not-found.js";
+import { ResourceNotFound } from "@/core/errors/errors/resource-not-found"
+import { makeAuthenticateUserUseCase } from "@/use-cases/factories/user/make-authenticate-user-use-case"
+import { FastifyReply, FastifyRequest } from "fastify"
+import z from "zod"
+
 export async function authenticateUser(request: FastifyRequest, reply: FastifyReply) {
 
     const authenticateBodySchema = z.object({
@@ -9,7 +10,7 @@ export async function authenticateUser(request: FastifyRequest, reply: FastifyRe
         password: z.string()
     })
 
-    const {email, password} = authenticateBodySchema.parse(request.body)
+    const { email, password } = authenticateBodySchema.parse(request.body)
 
     const authenticateUserUseCase = makeAuthenticateUserUseCase()
 
@@ -18,28 +19,26 @@ export async function authenticateUser(request: FastifyRequest, reply: FastifyRe
         password
     })
 
-    if( result.isLeft()) {
+    if (result.isLeft()) {
         const error = result.value
 
-        if(error instanceof ResourceNotFound) {
-            return reply.status(404).send({message: "credentials invalid"})
+        if (error instanceof ResourceNotFound) {
+            return reply.status(401).send({ message: "Email ou senha inválidos" })
         }
 
-        reply.status(400).send({message: "An error ocurred"})
+        return reply.status(400).send({ message: "An error ocurred" })
     }
 
-    if (result.isRight()) {
-        
-    const {user} = result.value
+    const { user } = result.value
 
-    const token = await reply.jwtSign({
-        role: user.role
-        }, {
-           sign:{
-            sub: String(user.id) 
-           } 
-        })
+    const token = await reply.jwtSign(
+        { role: user.role },
+        {
+            sign: {
+                sub: String(user.id)
+            }
+        }
+    )
 
-        return reply.status(200).send({token})
-    }
+    return reply.status(200).send({ token })
 }

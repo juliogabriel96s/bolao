@@ -21,7 +21,7 @@ export function Register(){
          try {
     setError("")
     await signUp(name, email, password)
-    navigate("/sessions")
+    navigate("/")
   } catch (err: unknown) {
      if (err instanceof Error) {
     setError(err.message)

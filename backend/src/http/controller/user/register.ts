@@ -1,9 +1,10 @@
-import { NotAllowedError } from "@/core/errors/errors/not-allowed-error";
-import { makeRegisterUserUseCase } from "@/use-cases/factories/user/make-regiter-user-use-case";
-import { FastifyReply, FastifyRequest } from "fastify";
-import z, { email } from "zod";
+import { NotAllowedError } from "@/core/errors/errors/not-allowed-error"
+import { makeRegisterUserUseCase } from "@/use-cases/factories/user/make-regiter-user-use-case"
+import { FastifyReply, FastifyRequest } from "fastify"
+import z from "zod"
 
 export async function registerUser(request: FastifyRequest, reply: FastifyReply){
+
     const registerBodySchema = z.object({
         name: z.string(),
         email: z.string(),
@@ -12,19 +13,29 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
 
     const {name, email, password} = registerBodySchema.parse(request.body)
 
-    try{
-        const registerUserUseCase =  makeRegisterUserUseCase()
+    const registerUserUseCase = makeRegisterUserUseCase()
 
-        const user = await registerUserUseCase.execute({
-            name,
-            email,
-            password
-        })
+    const result = await registerUserUseCase.execute({
+        name,
+        email,
+        password
+    })
 
-        return reply.status(201).send({user})
-    }catch(err){
-        if(err instanceof NotAllowedError){
-            return reply.status(409).send({message: "Email already exists"})
+    if (result.isLeft()) {
+        const error = result.value
+
+        if (error instanceof NotAllowedError) {
+            return reply.status(409).send({
+                message: "Email already exists"
+            })
         }
+
+        return reply.status(400).send({
+            message: "Erro ao cadastrar"
+        })
     }
+
+    const { user } = result.value
+
+    return reply.status(201).send({ user })
 }

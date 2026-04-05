@@ -37,24 +37,30 @@ export function DashboardChampionships() {
 }, []);
 
   return (
-    <div>
-      <h1>Campeonatos</h1>
+    <div className={styles.container}>
+
+      <div className={styles.box}>
+           <h1>Campeonatos</h1>
 
        {error && <p className={styles.error}>{error}</p>}
 
       {championships.map(c => (
         <div key={c.id}>
-          <p>{c.name}</p>
+          <p className={styles.paragrafo}>{c.name}</p>
 
           <button
             onClick={() =>
-              navigate(`/bets//championship/${c.id}/rounds`)
+              navigate(`/bets/championship/${c.id}/rounds`)
             }
+
+            className={styles.button}
           >
             Ver rodadas
           </button>
         </div>
       ))}
+      </div>
+   
     </div>
   );
 }

@@ -4,7 +4,7 @@ export function BetAuth(){
     async function createBet(roundId:string,  bets: Bet[]) {
         const token = localStorage.getItem("token")
 
-        return fetch(`http://localhost:3333/round/${roundId}/bet`,{
+      const response = await fetch(`http://localhost:3333/round/${roundId}/bet`,{
       method: "POST",
       headers:{
         "Content-Type": "application/json",
@@ -12,7 +12,16 @@ export function BetAuth(){
       },
       body: JSON.stringify({bets})
       
-    }).then(res => res.json())
+    })
+
+      
+    const data = await response.json();
+
+     if (!response.ok) {
+     throw new Error(data.message || "Erro ao criar a aposta");
+   }
+
+   return data;
 
     }
 

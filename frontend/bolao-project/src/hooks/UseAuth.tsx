@@ -11,21 +11,35 @@ export function useAuth(){
 
   const data = await response.json();
 
+  if (!response.ok) {
+    throw new Error(data.message || "Email ou senha inválidos");
+  }
   
   localStorage.setItem("token", data.token);
 
   return data;
 }
 
-  async function signUp(name: string, email: string, password: string) {
-    return fetch("http://localhost:3333/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, password }),
-    }).then(res => res.json())
+async function signUp(name: string, email: string, password: string) {
+  const response = await fetch("http://localhost:3333/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, email, password }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Erro ao cadastrar");
   }
+
+  console.log("STATUS:", response.status)
+  console.log("DATA:", data)
+
+  return data;
+}
 
 
 
@@ -33,7 +47,7 @@ export function useAuth(){
 
     const token = localStorage.getItem("token")
 
-    return fetch("http://localhost:3333/championship",{
+    const response =  await fetch("http://localhost:3333/championship",{
       method: "POST",
       headers:{
         "Content-Type": "application/json",
@@ -42,14 +56,23 @@ export function useAuth(){
       body: JSON.stringify({name, country, startDate: startDate.toISOString(),
       endDate: endDate.toISOString()})
       
-    }).then(res => res.json())
-  }
+    })
+
+    
+    const data = await response.json();
+
+    if (!response.ok) {
+     throw new Error(data.message || "Erro ao criar campeonato");
+    }
+
+    return data;
+    }
 
   async function createRounds(number: number, championshipId: string, startDate: Date, endDate: Date ){
 
     const token = localStorage.getItem("token")
 
-    return fetch(`http://localhost:3333/championship/${championshipId}/round`,{
+    const response = await fetch(`http://localhost:3333/championship/${championshipId}/round`,{
       method: "POST",
        headers:{
         "Content-Type": "application/json",
@@ -58,13 +81,22 @@ export function useAuth(){
       body: JSON.stringify({number, startDate: startDate.toISOString(),
       endDate: endDate.toISOString()}),
       })
-  }
+
+        
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Erro ao criar Rounds");
+    }
+
+    return data;
+    }
 
   async function createGames(roundId:string, homeTeam: string, awayTeam: string, startDate: Date) {
 
         const token = localStorage.getItem("token")
 
-    return fetch(`http://localhost:3333/round/${roundId}/game`,{
+    const response = await fetch(`http://localhost:3333/round/${roundId}/game`,{
        method: "POST",
        headers:{
         "Content-Type": "application/json",
@@ -72,7 +104,16 @@ export function useAuth(){
       },
        body: JSON.stringify({homeTeam, awayTeam, startDate: startDate.toISOString()}),
       })
-  }
+
+        
+      const data = await response.json();
+
+     if (!response.ok) {
+       throw new Error(data.message || "Erro ao criar Games");
+     }
+
+       return data;
+    }
 
   function signOut() {
   localStorage.removeItem("token");

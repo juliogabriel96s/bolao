@@ -109,11 +109,11 @@ export function Dashboard() {
           key={game.id}
           
         >
-          <p>
+          <p className={styles.paragrafos}>
             {game.homeTeam} vs {game.awayTeam}
           </p>
 
-          <small>
+          <small className={styles.date}>
             {new Date(game.startTime).toLocaleString()}
           </small>
 
